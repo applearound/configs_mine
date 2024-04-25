@@ -1,21 +1,10 @@
-if has('nvim')
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
 
-else
-  call plug#begin()
-    Plug 'junegunn/vim-easy-align'
-    Plug 'jiangmiao/auto-pairs'
-  call plug#end()
-
-  hi cursorline term=bold cterm=bold
-
-  let &t_SI = "\e[6 q"
-  let &t_EI = "\e[2 q"
-
-  augroup myCmds
-    au!
-    autocmd VimEnter * silent !echo -ne "\e[2 q"
-  augroup END
-endif
+augroup myCmds
+  au!
+  autocmd VimEnter * silent !echo -ne "\e[2 q"
+augroup END
 
 set nocompatible
 
