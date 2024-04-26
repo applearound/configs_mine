@@ -1,6 +1,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
 " Sections:
+"    -> Windows Area
 "    -> General
 "    -> VIM user interface
 "    -> Colors and Fonts
@@ -17,14 +18,35 @@
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Windows Area
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! IsWSL()
     if !has("unix")
         return 0
     endif
 
     let lines = readfile("/proc/version")
-    return lines[0] =~ "Microsoft"
+    return lines[0] =~? "microsoft"
 endfunction
+
+if IsWSL()
+  " Set Cursor and restore
+  let &t_SI = "\e[6 q"
+  let &t_EI = "\e[2 q"
+
+  set ttimeoutlen=50
+
+  if has("autocmd")
+      augroup wsl
+          autocmd!
+          autocmd GUIEnter * silent !printf "\e[2 q"
+          autocmd VimLeave * silent !printf "\e[0 q"
+      augroup END
+  endif
+endif
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -130,15 +152,6 @@ set foldcolumn=1
 set number
 set relativenumber
 
-" Set Cursor and restore
-let &t_SI = "\e[6 q"
-let &t_EI = "\e[2 q"
-
-set ttimeoutlen=50
-
-if has("autocmd") && IsWSL()
-    autocmd VimLeave * silent !echo -ne "\e[0 q"
-end
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
@@ -217,6 +230,7 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
 " Set mouse
 set mouse=a
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs, windows and buffers
