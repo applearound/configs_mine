@@ -31,22 +31,6 @@ function! IsWSL()
     return lines[0] =~? "microsoft"
 endfunction
 
-if IsWSL()
-  " Set Cursor and restore
-  let &t_SI = "\e[6 q"
-  let &t_EI = "\e[2 q"
-
-  set ttimeoutlen=50
-
-  if has("autocmd")
-      augroup wsl
-          autocmd!
-          autocmd VimEnter * silent !printf "\e[2 q\n"
-          autocmd VimLeave * silent !printf "\e[0 q"
-      augroup END
-  endif
-endif
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -151,6 +135,24 @@ set foldcolumn=1
 " Add line number
 set number
 set relativenumber
+
+" Set Cursor
+if &term =~? "xterm"
+  " Set Cursor and restore
+  let &t_SI = "\e[6 q"
+  let &t_EI = "\e[2 q"
+
+  set ttimeoutlen=50
+
+  if has("autocmd")
+      augroup wsl
+          autocmd!
+          autocmd VimEnter * silent !printf "\e[2 q"
+          autocmd VimEnter * silent !printf "\n"
+          autocmd VimLeave * silent !printf "\e[0 q"
+      augroup END
+  endif
+endif
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
