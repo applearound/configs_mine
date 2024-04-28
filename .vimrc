@@ -41,7 +41,7 @@ if IsWSL()
   if has("autocmd")
       augroup wsl
           autocmd!
-          autocmd GUIEnter * silent !printf "\e[2 q"
+          autocmd GUIEnter * silent !printf "\e[2 q\n"
           autocmd VimLeave * silent !printf "\e[0 q"
       augroup END
   endif
