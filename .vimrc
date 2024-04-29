@@ -31,10 +31,6 @@ function! IsWSL()
     return lines[0] =~? "microsoft"
 endfunction
 
-if IsWSL()
-    set clipboard^=unnamedplus,unnamed
-endif
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -60,6 +56,9 @@ nmap <leader>w :w!<cr>
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
 command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+
+" Set clipboard
+set clipboard^=unnamedplus,unnamed
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
