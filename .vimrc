@@ -31,6 +31,10 @@ function! IsWSL()
     return lines[0] =~? "microsoft"
 endfunction
 
+if IsWSL()
+    set clipboard^=unnamedplus,unnamed
+endif
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
